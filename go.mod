@@ -19,7 +19,7 @@ require (
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/ian-kent/goose v0.0.0-20141221090059-c3541ea826ad // indirect
 	github.com/ian-kent/linkio v0.0.0-20170807205755-97566b872887 // indirect
-	github.com/jphautin/mailhog-storage v1.1.0-rc2 // indirect
+	github.com/jphautin/mailhog-storage v1.1.0-rc3 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/mailhog/data v1.0.1 // indirect
 	github.com/mailhog/smtp v1.0.1 // indirect
