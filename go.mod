@@ -6,8 +6,8 @@ require (
 	github.com/gorilla/pat v1.0.1
 	github.com/ian-kent/envconf v0.0.0-20141026121121-c19809918c02
 	github.com/ian-kent/go-log v0.0.0-20160113211217-5731446c36ab
-	github.com/jphautin/mailhog-gui v1.1.0-rc2
-	github.com/jphautin/mailhog-server v1.1.0-rc2
+	github.com/jphautin/mailhog-gui v1.1.0-rc3
+	github.com/jphautin/mailhog-server v1.1.0-rc3
 	github.com/mailhog/mhsendmail v0.2.1-0.20160920204233-c097b3bc3fe7
 	golang.org/x/crypto v0.5.0
 )
