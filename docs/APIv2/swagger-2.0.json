@@ -26,6 +26,22 @@
                         "type": "number",
                         "format": "int64",
                         "default": 50
+                    },
+                    {
+                        "name": "field",
+                        "in": "query",
+                        "description": "field to use to sort messages (time, size, recipients, sender)",
+                        "required": false,
+                        "type": "string",
+                        "default": "time"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "define sorting order (descending or ascending)",
+                        "required": false,
+                        "type": "string",
+                        "default": "desc"
                     }
                 ],
                 "responses": {
@@ -164,6 +180,22 @@
                         "type": "number",
                         "format": "int64",
                         "default": 50
+                    },
+                    {
+                        "name": "field",
+                        "in": "query",
+                        "description": "field to use to sort messages (time, size, recipients, sender)",
+                        "required": false,
+                        "type": "string",
+                        "default": "time"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "define sorting order (descending or ascending)",
+                        "required": false,
+                        "type": "string",
+                        "default": "desc"
                     }
                 ],
                 "responses": {

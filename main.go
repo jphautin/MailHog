@@ -9,14 +9,12 @@ import (
 
 	"github.com/gorilla/pat"
 	"github.com/ian-kent/go-log/log"
-	"github.com/mailhog/MailHog-Server/api"
-	cfgapi "github.com/mailhog/MailHog-Server/config"
-	"github.com/mailhog/MailHog-Server/smtp"
-	"github.com/mailhog/MailHog-UI/assets"
-	cfgui "github.com/mailhog/MailHog-UI/config"
-	"github.com/mailhog/MailHog-UI/web"
-	cfgcom "github.com/mailhog/MailHog/config"
-	"github.com/mailhog/http"
+	cfgcom "github.com/jphautin/MailHog/config"
+	cfgui "github.com/jphautin/mailhog-gui/config"
+	"github.com/jphautin/mailhog-gui/web"
+	"github.com/jphautin/mailhog-server/api"
+	cfgapi "github.com/jphautin/mailhog-server/config"
+	"github.com/jphautin/mailhog-server/smtp"
 	"github.com/mailhog/mhsendmail/cmd"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -65,7 +63,7 @@ func main() {
 		}
 		b, err := bcrypt.GenerateFromPassword([]byte(pw), 4)
 		if err != nil {
-			log.Fatalf("error bcrypting password: %s", err)
+			log.Fatal("error bcrypting password: %s", err)
 			os.Exit(1)
 		}
 		fmt.Println(string(b))
@@ -75,25 +73,25 @@ func main() {
 	configure()
 
 	if comconf.AuthFile != "" {
-		http.AuthFile(comconf.AuthFile)
+		web.AuthFile(comconf.AuthFile)
 	}
 
 	exitCh = make(chan int)
 	if uiconf.UIBindAddr == apiconf.APIBindAddr {
 		cb := func(r gohttp.Handler) {
-			web.CreateWeb(uiconf, r.(*pat.Router), assets.Asset)
+			web.CreateWeb(uiconf, r.(*pat.Router))
 			api.CreateAPI(apiconf, r.(*pat.Router))
 		}
-		go http.Listen(uiconf.UIBindAddr, assets.Asset, exitCh, cb)
+		go web.Listen(uiconf.UIBindAddr, cb)
 	} else {
 		cb1 := func(r gohttp.Handler) {
-			api.CreateAPI(apiconf, r.(*pat.Router))
+			api.CreateAPI(apiconf, r)
 		}
 		cb2 := func(r gohttp.Handler) {
-			web.CreateWeb(uiconf, r.(*pat.Router), assets.Asset)
+			web.CreateWeb(uiconf, r.(*pat.Router))
 		}
-		go http.Listen(apiconf.APIBindAddr, assets.Asset, exitCh, cb1)
-		go http.Listen(uiconf.UIBindAddr, assets.Asset, exitCh, cb2)
+		go web.Listen(apiconf.APIBindAddr, cb1)
+		go web.Listen(uiconf.UIBindAddr, cb2)
 	}
 	go smtp.Listen(apiconf, exitCh)
 
